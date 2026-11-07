@@ -1,1 +1,0 @@
-// Instrument explorer screen route

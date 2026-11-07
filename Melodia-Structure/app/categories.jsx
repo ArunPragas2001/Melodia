@@ -1,1 +1,0 @@
-// Instrument categories screen route

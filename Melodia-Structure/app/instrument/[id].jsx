@@ -1,1 +1,0 @@
-// Instrument details screen route
