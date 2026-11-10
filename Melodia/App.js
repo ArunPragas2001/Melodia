@@ -20,6 +20,8 @@ export default function App() {
           name="categories"
           options={{ title: "Instrument families" }}
         />
+        <Stack.Screen name="search" options={{ title: "Search instruments" }} />
+        <Stack.Screen name="details" options={{ title: "Instrument details" }} />
       </Stack>
     </>
   );
