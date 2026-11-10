@@ -1,13 +1,17 @@
 import React from "react";
-import { Image, Text, View, StyleSheet } from "react-native";
+import { Image, Pressable, Text, View, StyleSheet } from "react-native";
 import images from "../data/images";
 import { FamilyBadge } from "./UI";
 import colors from "../theme/colors";
 import styles from "../theme/styles";
 
-export default function InstrumentCard({ instrument, compact = false }) {
-  return (
-    <View style={[card.container, compact && card.compact]}>
+export default function InstrumentCard({
+  instrument,
+  compact = false,
+  onPress,
+}) {
+  const content = (
+    <>
       <View style={[card.image, compact && card.smallImage]}>
         <Image
           source={images[instrument.id]}
@@ -21,6 +25,29 @@ export default function InstrumentCard({ instrument, compact = false }) {
         <Text style={styles.heading}>{instrument.name}</Text>
         <Text style={styles.muted}>{instrument.description}</Text>
       </View>
+    </>
+  );
+
+  if (onPress) {
+    return (
+      <Pressable
+        accessibilityRole="button"
+        accessibilityLabel={`View ${instrument.name}`}
+        onPress={onPress}
+        style={({ pressed }) => [
+          card.container,
+          compact && card.compact,
+          pressed && styles.pressed,
+        ]}
+      >
+        {content}
+      </Pressable>
+    );
+  }
+
+  return (
+    <View style={[card.container, compact && card.compact]}>
+      {content}
     </View>
   );
 }
