@@ -1,6 +1,6 @@
 # Melodia
 
-An offline instrument learning app built with Expo SDK 58 and React Native. Browse 12 instruments, explore their families and read a short introduction to each one.
+An offline instrument learning app built with Expo SDK 58 and React Native. Browse 12 instruments, search the library and follow beginner playing guides.
 
 ## Run the app
 
@@ -34,8 +34,12 @@ The Expo home override is a CLI escape hatch for this cloud environment. Omit th
 - Home spotlight, suggested instruments, and family shortcuts.
 - Explore all 12 instruments or filter by Strings, Wind, Percussion, and Keyboard.
 - Categories with instrument counts and links to filtered Explore results.
+- Search by instrument name and family, with clear result and empty states.
+- Instrument profiles with origins, main components, and local images.
+- Beginner setup, playing steps, practice patterns, demonstrations, and tips.
 
-Instrument cards show each instrument's name, family, image and description.
+Instrument cards on Home and Explore open the matching profile. Search ignores
+capitalisation and extra spaces, and can be combined with a family filter.
 
 The 12 instrument records, lesson reference and credited images are bundled locally. No backend, sign-in or API key is needed.
 
@@ -54,8 +58,8 @@ Browser tests run against the exported `dist` directory and use system Chromium 
 ## Project structure
 
 - `src/app/`: Expo Router routes, stack and Home/Explore tabs.
-- `src/screens/`: Home, Explore and Categories.
-- `src/components/`: instrument cards, category cards and shared UI.
+- `src/screens/`: Home, Explore, Categories, Search, and instrument Details.
+- `src/components/`: cards, search controls, playing guides, and shared UI.
 - `src/data/`: instrument records, image mappings, and family metadata.
 - `assets/images/`: bundled instrument images.
 

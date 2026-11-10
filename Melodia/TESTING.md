@@ -20,8 +20,10 @@ Verified: data validation, lint, JavaScript type checks, Android/iOS/web exports
 - Home: the spotlight opens Strings in Explore, and family shortcuts open the selected family.
 - Categories: all four cards open the matching Explore filter.
 - Explore: each family shows three instruments, All shows 12, filters survive a reload, and an unknown family returns to All.
+- Search: trimmed and case-insensitive name matching, family filters, singular and plural result counts, clear input, and empty results.
+- Details: valid and missing instrument IDs, origin and component information, playing steps, practice content, demonstration, tip, and family navigation.
 - Images: all 12 instrument images load in the browser.
-- Layout: Home, Explore and Categories have no document overflow at 320, 390 and 820 pixels.
+- Layout: Home, Explore, Categories, Search, and Details have no document overflow at 320, 390 and 820 pixels.
 - Lint and JavaScript type checks use the committed configurations.
 
 Cloud validation uses Node 24.22.1, npm 11.9.0 and Expo SDK 58. To use the cloud export directory:
@@ -33,4 +35,4 @@ MELODIA_EXPORT_DIR=/workspace/melodia-export-check npm run test:browser
 
 ## Still to check on a device
 
-Android and iOS exports check bundling, not installed app behaviour. Check safe areas, back navigation, touch targets, large system text and image sizing on a phone. Verify locally bundled content in airplane mode using an installed build. A Metro session still needs its server; the web export has no offline service worker.
+Android and iOS exports check bundling, not installed app behaviour. Check safe areas, back navigation, the search keyboard, horizontal practice-pattern scrolling, touch targets, large system text and image sizing on a phone. Verify locally bundled content in airplane mode using an installed build. A Metro session still needs its server; the web export has no offline service worker.
