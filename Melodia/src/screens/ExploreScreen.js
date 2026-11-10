@@ -4,6 +4,7 @@ import { FlatList, Text, View, Pressable } from "react-native";
 import instruments from "../data/instruments.json";
 import families from "../data/families";
 import InstrumentCard from "../components/InstrumentCard";
+import SearchBar from "../components/SearchBar";
 import { Heading, FamilyChips, useGrid } from "../components/UI";
 import s from "../theme/styles";
 import c from "../theme/colors";
@@ -33,6 +34,7 @@ export default function ExploreScreen() {
             title={family || "A world of instruments."}
             description="Get to know the sounds behind the music."
           />
+          <SearchBar onPress={() => router.push("/search")} />
           <FamilyChips
             value={family || "All"}
             onChange={(name) =>
@@ -62,7 +64,12 @@ export default function ExploreScreen() {
       }
       renderItem={({ item }) => (
         <View style={{ width: cardWidth }}>
-          <InstrumentCard instrument={item} />
+          <InstrumentCard
+            instrument={item}
+            onPress={() =>
+              router.push({ pathname: "/details", params: { id: item.id } })
+            }
+          />
         </View>
       )}
     />

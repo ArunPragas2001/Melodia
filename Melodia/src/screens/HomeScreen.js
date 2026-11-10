@@ -5,6 +5,7 @@ import Ionicons from "@expo/vector-icons/Ionicons";
 import Page from "../components/Page";
 import InstrumentCard from "../components/InstrumentCard";
 import CategoryCard from "../components/CategoryCard";
+import SearchBar from "../components/SearchBar";
 import { Heading, Section, useGrid } from "../components/UI";
 import instruments from "../data/instruments.json";
 import images from "../data/images";
@@ -18,6 +19,7 @@ export default function HomeScreen() {
         eyebrow="A LITTLE CURIOSITY. A LOT OF MUSIC."
         title="Discover your sound."
       />
+      <SearchBar onPress={() => router.push("/search")} />
       <View
         style={{
           backgroundColor: c.purple,
@@ -169,7 +171,12 @@ export default function HomeScreen() {
             )
             .map((item) => (
               <View key={item.id} style={{ width: cardWidth }}>
-                <InstrumentCard instrument={item} />
+                <InstrumentCard
+                  instrument={item}
+                  onPress={() =>
+                    router.push({ pathname: "/details", params: { id: item.id } })
+                  }
+                />
               </View>
             ))}
         </View>
@@ -179,7 +186,14 @@ export default function HomeScreen() {
         {instruments
           .filter((i) => ["guitar", "saxophone"].includes(i.id))
           .map((item) => (
-            <InstrumentCard key={item.id} compact instrument={item} />
+            <InstrumentCard
+              key={item.id}
+              compact
+              instrument={item}
+              onPress={() =>
+                router.push({ pathname: "/details", params: { id: item.id } })
+              }
+            />
           ))}
       </View>
       <View
