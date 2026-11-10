@@ -8,7 +8,7 @@ import styles from "../theme/styles";
 export default function InstrumentCard({
   instrument,
   compact = false,
-  onPress,
+  onPress = undefined,
 }) {
   const content = (
     <>
