@@ -1,12 +1,12 @@
 import React from "react";
-import { Pressable, Text, TextInput, View } from "react-native";
+import { Pressable, StyleSheet, Text, TextInput, View } from "react-native";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import colors from "../theme/colors";
 
 export default function SearchBar({
   value = "",
-  onChangeText,
-  onPress,
+  onChangeText = undefined,
+  onPress = undefined,
 }) {
   if (onPress) {
     return (
@@ -50,7 +50,7 @@ export default function SearchBar({
   );
 }
 
-const styles = {
+const styles = StyleSheet.create({
   container: {
     minHeight: 54,
     borderRadius: 18,
@@ -73,4 +73,4 @@ const styles = {
     color: colors.text,
     fontSize: 14,
   },
-};
+});
