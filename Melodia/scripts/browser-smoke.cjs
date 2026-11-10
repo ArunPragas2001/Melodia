@@ -64,9 +64,14 @@ const server = http.createServer((req, res) => {
     await expectText("3 instruments to discover");
     await page.getByRole("button", { name: "All", exact: true }).click();
     await expectText("12 instruments to discover");
-    await page.getByTestId("instrument-list").getByText("Guitar", { exact: true }).waitFor();
+    await page
+      .getByTestId("instrument-list")
+      .getByText("Guitar", { exact: true })
+      .waitFor();
     await page.waitForFunction(() => {
-      const images = Array.from(document.querySelectorAll('[data-testid="instrument-list"] img'));
+      const images = Array.from(
+        document.querySelectorAll('[data-testid="instrument-list"] img'),
+      );
       return (
         images.length >= 12 &&
         images.every((image) => image.complete && image.naturalWidth > 0)
@@ -88,16 +93,58 @@ const server = http.createServer((req, res) => {
     await expectText("3 instruments to discover");
     await page.getByText("Show all families →", { exact: true }).click();
     await expectText("12 instruments to discover");
+
+    await page.goto(base + "/search");
+    const search = page.getByRole("textbox", {
+      name: "Search instruments by name",
+    });
+    await search.fill("  GUITAR  ");
+    await expectText("1 result");
+    await page.getByRole("button", { name: "View Guitar" }).click();
+    await expectText("How to play");
+    await expectText("Four open-string notes");
+    await expectText("Demonstration");
+    await expectText("Beginner tip");
+    await page
+      .getByRole("button", { name: "Explore the Strings family" })
+      .click();
+    await expectText("3 instruments to discover");
+
+    await page.goto(base + "/search");
+    await page.getByRole("button", { name: "Wind", exact: true }).click();
+    await expectText("3 results");
+    await search.fill("sax");
+    await expectText("1 result");
+    await page.getByRole("button", { name: "Clear search" }).click();
+    await expectText("3 results");
+    await search.fill("not in the library");
+    await expectText("No instruments found");
+
+    await page.goto(base + "/details?id=missing");
+    await expectText("Instrument not found");
+    await page.getByRole("button", { name: "Return to Explore" }).click();
+    await expectText("12 instruments to discover");
+
     for (const width of [320, 390, 820]) {
       await page.setViewportSize({ width, height: 844 });
-      for (const route of ["/", "/explore", "/categories"]) {
+      for (const route of [
+        "/",
+        "/explore",
+        "/categories",
+        "/search",
+        "/details?id=guitar",
+      ]) {
         await page.goto(base + route);
         await expectText(
           route === "/"
             ? "Discover your sound."
             : route === "/explore"
               ? "12 instruments to discover"
-              : "Every sound has a family.",
+              : route === "/categories"
+                ? "Every sound has a family."
+                : route === "/search"
+                  ? "Find an instrument."
+                  : "How to play",
         );
         assert(
           await page.evaluate(
@@ -109,7 +156,7 @@ const server = http.createServer((req, res) => {
     }
     assert.deepEqual(errors, []);
     console.log(
-      "PASS: Home, Explore, Categories, four family filters, reloads, all 12 images, unknown families and three viewport widths; no page errors.",
+      "PASS: browsing, search, details, playing guides, missing results and three viewport widths; no page errors.",
     );
   } finally {
     if (browser) await browser.close();
