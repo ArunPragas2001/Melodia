@@ -2,6 +2,7 @@ const assert = require("node:assert/strict");
 const fs = require("node:fs");
 const path = require("node:path");
 const instruments = require("../src/data/instruments.json");
+const questions = require("../src/data/questions.json");
 const root = path.join(__dirname, "..");
 const images = fs.readdirSync(path.join(root, "assets/images"));
 const required = [
@@ -63,6 +64,21 @@ console.log(
 const credits = require("../assets/image-credits.json");
 assert.deepEqual(credits.map((entry) => entry.id).sort(), required.sort());
 for (const credit of credits) {
-  for (const field of ["source", "artist", "license", "licenseURL", "changes"]) text(credit[field], field);
+  for (const field of ["source", "artist", "license", "licenseURL", "changes"])
+    text(credit[field], field);
 }
-console.log("PASS: four families and image attribution records are valid.");
+assert.equal(questions.length, 8, "The quiz should have eight questions");
+for (const question of questions) {
+  text(question.question, "Quiz question");
+  text(question.explanation, "Quiz explanation");
+  assert.equal(question.options.length, 4, "Each question needs four options");
+  assert(
+    Number.isInteger(question.answer) &&
+      question.answer >= 0 &&
+      question.answer < question.options.length,
+    "The correct answer must point to an option",
+  );
+}
+console.log(
+  "PASS: four families, image attribution records and quiz questions are valid.",
+);
