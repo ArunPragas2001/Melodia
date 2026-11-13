@@ -57,6 +57,21 @@ const server = http.createServer((req, res) => {
     const expectText = (text) =>
       page.getByText(text, { exact: true }).filter({ visible: true }).waitFor();
     await page.goto(base);
+    await expectText("Sign in to Melodia.");
+    await page.getByText("Create an account", { exact: true }).click();
+    await expectText("Create an account.");
+    await page.getByRole("button", { name: "Create account" }).click();
+    await expectText("Enter your name");
+    await page.getByRole("textbox", { name: "Name" }).fill("Alex Rivera");
+    await page.getByRole("textbox", { name: "Email" }).fill("alex@example.com");
+    await page
+      .getByLabel("Password", { exact: true })
+      .filter({ visible: true })
+      .fill("musicpass123");
+    await page.getByLabel("Confirm password").fill("musicpass123");
+    await page.getByRole("button", { name: "Create account" }).click();
+    await expectText("Discover your sound.");
+    await page.reload();
     await expectText("Discover your sound.");
     await page
       .getByRole("button", { name: "Browse string instruments", exact: true })
@@ -105,11 +120,12 @@ const server = http.createServer((req, res) => {
     await expectText("Four open-string notes");
     await expectText("Demonstration");
     await expectText("Beginner tip");
-    await page
-      .getByRole("button", { name: "Explore the Strings family" })
-      .click();
-    await expectText("3 instruments to discover");
-
+    await page.getByRole("button", { name: "Save to favourites" }).click();
+    await expectText("Remove from favourites");
+    await page.goto(base + "/favourites");
+    await expectText("1 saved instrument");
+    await page.reload();
+    await expectText("1 saved instrument");
     await page.goto(base + "/search");
     await page.getByRole("button", { name: "Wind", exact: true }).click();
     await expectText("3 results");
@@ -125,6 +141,50 @@ const server = http.createServer((req, res) => {
     await page.getByRole("button", { name: "Return to Explore" }).click();
     await expectText("12 instruments to discover");
 
+    await page.goto(base + "/quiz");
+    const correctAnswers = [
+      "Violin",
+      "Percussion",
+      "Hammers",
+      "Saxophone",
+      "Frets",
+      "Accordion",
+      "Buzz their lips",
+      "Wood",
+    ];
+    for (let index = 0; index < correctAnswers.length; index += 1) {
+      await page
+        .getByRole("button", { name: correctAnswers[index], exact: true })
+        .click();
+      await expectText("Correct!");
+      await page
+        .getByRole("button", {
+          name: index === correctAnswers.length - 1 ? "View result" : "Next question",
+        })
+        .click();
+    }
+    await expectText("8/8");
+    await page.goto(base + "/profile");
+    await expectText("Alex Rivera");
+    await expectText("8/8");
+    await page.getByRole("button", { name: "Sign out" }).click();
+    await expectText("Sign in to Melodia.");
+    await page.getByRole("textbox", { name: "Email" }).fill("alex@example.com");
+    await page
+      .getByLabel("Password", { exact: true })
+      .filter({ visible: true })
+      .fill("wrong password");
+    await page.getByRole("button", { name: "Sign in" }).click();
+    await expectText("Email or password is incorrect");
+    await page
+      .getByLabel("Password", { exact: true })
+      .filter({ visible: true })
+      .fill("musicpass123");
+    await page.getByRole("button", { name: "Sign in" }).click();
+    await expectText("Discover your sound.");
+    await page.goto(base + "/profile");
+    await expectText("8/8");
+
     for (const width of [320, 390, 820]) {
       await page.setViewportSize({ width, height: 844 });
       for (const route of [
@@ -133,6 +193,8 @@ const server = http.createServer((req, res) => {
         "/categories",
         "/search",
         "/details?id=guitar",
+        "/favourites",
+        "/profile",
       ]) {
         await page.goto(base + route);
         await expectText(
@@ -144,6 +206,10 @@ const server = http.createServer((req, res) => {
                 ? "Every sound has a family."
                 : route === "/search"
                   ? "Find an instrument."
+                  : route === "/favourites"
+                    ? "Favourites."
+                    : route === "/profile"
+                      ? "Alex Rivera"
                   : "How to play",
         );
         assert(
@@ -156,7 +222,7 @@ const server = http.createServer((req, res) => {
     }
     assert.deepEqual(errors, []);
     console.log(
-      "PASS: browsing, search, details, playing guides, missing results and three viewport widths; no page errors.",
+      "PASS: accounts, browsing, search, details, favourites, quiz, profile, persistence and responsive layouts; no page errors.",
     );
   } finally {
     if (browser) await browser.close();

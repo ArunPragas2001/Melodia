@@ -4,8 +4,10 @@
   "main": "index.js",
   "dependencies": {
     "@expo/vector-icons": "^15.0.2",
+    "@react-native-async-storage/async-storage": "2.2.0",
     "expo": "~58.0.23",
     "expo-constants": "~58.0.15",
+    "expo-crypto": "~58.0.7",
     "expo-linking": "~58.0.16",
     "expo-router": "~58.0.30",
     "expo-status-bar": "~58.0.4",
@@ -24,6 +26,7 @@
     "lint": "eslint App.js index.js src scripts",
     "typecheck": "tsc --project tsconfig.json",
     "test:browser": "node scripts/browser-smoke.cjs",
+    "previews": "node scripts/capture-previews.cjs",
     "check": "node scripts/check-data.cjs"
   },
   "private": true,
