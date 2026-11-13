@@ -3,12 +3,15 @@ import { ActivityIndicator, View } from "react-native";
 import { Stack, useRouter, useSegments } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import { AuthProvider, useAuth } from "./src/storage/AuthContext";
+import { LibraryProvider } from "./src/storage/LibraryContext";
 import colors from "./src/theme/colors";
 
 export default function App() {
   return (
     <AuthProvider>
-      <AppNavigation />
+      <LibraryProvider>
+        <AppNavigation />
+      </LibraryProvider>
     </AuthProvider>
   );
 }
