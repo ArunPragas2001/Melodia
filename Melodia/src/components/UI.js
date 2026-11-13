@@ -11,6 +11,40 @@ import families from "../data/families";
 import c from "../theme/colors";
 import s from "../theme/styles";
 
+export function Button({
+  label,
+  onPress,
+  icon = "arrow-forward",
+  secondary = false,
+  disabled = false,
+}) {
+  return (
+    <Pressable
+      accessibilityRole="button"
+      accessibilityLabel={label}
+      disabled={disabled}
+      onPress={onPress}
+      style={({ pressed }) => [
+        s.button,
+        secondary && { backgroundColor: c.elevated },
+        disabled && { opacity: 0.55 },
+        pressed && s.pressed,
+      ]}
+    >
+      {icon ? (
+        <Ionicons
+          name={/** @type {keyof typeof Ionicons.glyphMap} */ (icon)}
+          size={18}
+          color={secondary ? c.purple : c.ink}
+        />
+      ) : null}
+      <Text style={[s.buttonText, secondary && { color: c.text }]}>
+        {label}
+      </Text>
+    </Pressable>
+  );
+}
+
 export function Heading({ eyebrow, title, description = "" }) {
   return (
     <View style={{ gap: 9 }}>
@@ -106,6 +140,37 @@ export function FamilyChips({ value, onChange }) {
         </Pressable>
       ))}
     </ScrollView>
+  );
+}
+
+export function Stat({ value, label, icon }) {
+  return (
+    <View style={[s.card, { flex: 1, padding: 14, alignItems: "center" }]}>
+      <Ionicons
+        name={/** @type {keyof typeof Ionicons.glyphMap} */ (icon)}
+        color={c.purple}
+        size={19}
+      />
+      <Text style={s.heading}>{value}</Text>
+      <Text style={[s.muted, { fontSize: 10, textAlign: "center" }]}>
+        {label}
+      </Text>
+    </View>
+  );
+}
+
+export function EmptyState({ icon, title, description, action, onPress }) {
+  return (
+    <View style={[s.card, { alignItems: "center", paddingVertical: 34 }]}>
+      <Ionicons
+        name={/** @type {keyof typeof Ionicons.glyphMap} */ (icon)}
+        color={c.purple}
+        size={32}
+      />
+      <Text style={[s.heading, { textAlign: "center" }]}>{title}</Text>
+      <Text style={[s.muted, { textAlign: "center" }]}>{description}</Text>
+      {action ? <Button label={action} onPress={onPress} /> : null}
+    </View>
   );
 }
 // Two columns on phones, three on larger windows. No external layout library.
