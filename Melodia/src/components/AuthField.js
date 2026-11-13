@@ -23,7 +23,9 @@ export default function AuthField({
           value={value}
           onChangeText={onChangeText}
           accessibilityLabel={label}
-          autoCapitalize={keyboardType === "email-address" ? "none" : "sentences"}
+          autoCapitalize={
+            secure || keyboardType === "email-address" ? "none" : "sentences"
+          }
           autoCorrect={false}
           autoComplete={autoComplete}
           keyboardType={
