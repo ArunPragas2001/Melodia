@@ -32,7 +32,7 @@ The Expo home override is a CLI escape hatch for this cloud environment. Omit th
 ## Included features
 
 - Home spotlight, suggested instruments, and family shortcuts.
-- Explore all 12 instruments or filter by Strings, Wind, Percussion, and Keyboard.
+- Explore all 12 instruments, sort them alphabetically, or filter by Strings, Wind, Percussion, and Keyboard.
 - Categories with instrument counts and links to filtered Explore results.
 - Search by instrument name and family, with clear result and empty states.
 - Instrument profiles with origins, main components, and local images.

@@ -19,7 +19,7 @@ Verified: data validation, lint, JavaScript type checks, Android/iOS/web exports
 - Data: 12 instruments, three in each of four families, local image files, image credit records and complete lesson fields.
 - Home: the spotlight opens Strings in Explore, and family shortcuts open the selected family.
 - Categories: all four cards open the matching Explore filter.
-- Explore: each family shows three instruments, All shows 12, filters survive a reload, and an unknown family returns to All.
+- Explore: each family shows three instruments, All shows 12, A–Z and Z–A sorting work, filters survive a reload, and an unknown family returns to All.
 - Search: trimmed and case-insensitive name matching, family filters, singular and plural result counts, clear input, and empty results.
 - Details: valid and missing instrument IDs, origin and component information, playing steps, practice content, demonstration, tip, and family navigation.
 - Accounts: registration validation, session restore after reload, logout, rejected passwords, and successful login.
