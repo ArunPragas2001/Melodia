@@ -5,6 +5,7 @@ import Ionicons from "@expo/vector-icons/Ionicons";
 import Page from "../components/Page";
 import PlayingGuide from "../components/PlayingGuide";
 import { FamilyBadge } from "../components/UI";
+import { useLibrary } from "../storage/LibraryContext";
 import instruments from "../data/instruments.json";
 import images from "../data/images";
 import colors from "../theme/colors";
@@ -13,6 +14,7 @@ import styles from "../theme/styles";
 export default function DetailsScreen() {
   const { id } = useLocalSearchParams();
   const instrument = instruments.find((item) => item.id === id);
+  const { favourites, saving, toggleFavourite } = useLibrary();
 
   if (!instrument) {
     return (
@@ -35,6 +37,8 @@ export default function DetailsScreen() {
     );
   }
 
+  const saved = favourites.includes(instrument.id);
+
   return (
     <Page>
       <View style={detailStyles.hero}>
@@ -52,6 +56,23 @@ export default function DetailsScreen() {
         <Text style={detailStyles.name}>{instrument.name}</Text>
         <Text style={styles.muted}>{instrument.description}</Text>
       </View>
+
+      <Pressable
+        accessibilityRole="button"
+        accessibilityState={{ selected: saved, disabled: saving }}
+        disabled={saving}
+        onPress={() => toggleFavourite(instrument.id)}
+        style={[styles.button, saving && { opacity: 0.55 }]}
+      >
+        <Ionicons
+          name={saved ? "heart" : "heart-outline"}
+          size={19}
+          color={colors.ink}
+        />
+        <Text style={styles.buttonText}>
+          {saved ? "Remove from favourites" : "Save to favourites"}
+        </Text>
+      </Pressable>
 
       <View style={styles.card}>
         <View style={detailStyles.cardTitle}>
