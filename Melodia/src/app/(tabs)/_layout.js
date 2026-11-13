@@ -7,6 +7,7 @@ const icons = {
   index: "home-outline",
   explore: "compass-outline",
   favourites: "heart-outline",
+  quiz: "musical-notes-outline",
 };
 
 export default function TabLayout() {
@@ -33,6 +34,7 @@ export default function TabLayout() {
       <Tabs.Screen name="index" options={{ title: "Home" }} />
       <Tabs.Screen name="explore" options={{ title: "Explore" }} />
       <Tabs.Screen name="favourites" options={{ title: "Favourites" }} />
+      <Tabs.Screen name="quiz" options={{ title: "Quiz" }} />
     </Tabs>
   );
 }
