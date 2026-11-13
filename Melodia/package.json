@@ -26,6 +26,7 @@
     "lint": "eslint App.js index.js src scripts",
     "typecheck": "tsc --project tsconfig.json",
     "test:browser": "node scripts/browser-smoke.cjs",
+    "previews": "node scripts/capture-previews.cjs",
     "check": "node scripts/check-data.cjs"
   },
   "private": true,
