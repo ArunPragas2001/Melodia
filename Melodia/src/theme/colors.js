@@ -1,0 +1,17 @@
+export default {
+  background: "#100F17",
+  surface: "#1B1925",
+  elevated: "#252130",
+  purple: "#BA9CFF",
+  purpleSoft: "#2D243F",
+  orange: "#FFBC83",
+  text: "#F6F2FC",
+  muted: "#ADA5BB",
+  border: "#302A3C",
+  green: "#8ED9B2",
+  greenSoft: "#182E26",
+  red: "#FFA5AE",
+  redSoft: "#35212A",
+  ink: "#241735",
+  image: "#F2EFEB",
+};
