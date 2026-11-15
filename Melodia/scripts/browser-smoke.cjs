@@ -79,6 +79,11 @@ const server = http.createServer((req, res) => {
     await expectText("3 instruments to discover");
     await page.getByRole("button", { name: "All", exact: true }).click();
     await expectText("12 instruments to discover");
+    const cards = page.locator('[data-testid="instrument-list"] [aria-label^="View "]');
+    assert.equal(await cards.first().getAttribute("aria-label"), "View Accordion");
+    await page.getByRole("button", { name: "Sort instruments Z to A" }).click();
+    assert.equal(await cards.first().getAttribute("aria-label"), "View Xylophone");
+    await page.getByRole("button", { name: "Sort instruments A to Z" }).click();
     await page
       .getByTestId("instrument-list")
       .getByText("Guitar", { exact: true })

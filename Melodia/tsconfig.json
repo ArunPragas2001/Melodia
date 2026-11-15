@@ -12,5 +12,11 @@
     "allowSyntheticDefaultImports": true,
     "skipLibCheck": true
   },
-  "include": ["App.js", "index.js", "src/**/*.js", "types/**/*.d.ts"]
+  "include": [
+    "App.js",
+    "index.js",
+    "src/**/*.js",
+    "types/**/*.d.ts"
+  ],
+  "extends": "expo/tsconfig.base"
 }
